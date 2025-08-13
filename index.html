@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>?</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <button id="startBtn">?</button>
+  <audio id="bgMusic" src="music.mp3" preload="auto"></audio>
+  
+  <!-- messageBox now lives here -->
+  <div id="messageBox"></div>
+  
+  <div class="container">
+    <h1 id="animatedTitle"></h1>
+    <p id="animatedText"></p>
+  </div>
+  
+  <script>
+    const startBtn = document.getElementById('startBtn');
+    const bgMusic  = document.getElementById('bgMusic');
+    const title    = document.getElementById('animatedTitle');
+    const textPara = document.getElementById('animatedText');
+    const box      = document.getElementById('messageBox');
+
+    const messages = [
+      "...",
+      "?",
+      "A, da...",
+      "Azi e 17 august...",
+      "17 august 2025",
+      "Mai știi?",
+      "Ne-am împrietenit acum 7 ani, pe 31 octombrie 2018.",
+      "Am mers la colindat împreună.",
+      "Tu erai îmbrăcat în Skull Trooper, eu în vampir.",
+      "Am făcut 14 lei în seara aia.",
+      "Zece de la mama ta...",
+      "6 ani, 9 luni și 17 zile",
+      "sau 2.428 de zile",
+      "sau 58.272 de ore",
+      "sau 3.496.320 de minute",
+      "sau 209.779.200 de secunde",
+      "De atât timp ne cunoaștem...",
+      "Și la bune, și la rele.",
+      "Și la urcat pe Grădiște, și la citit în cimitir.",
+      "Și la mers la școală, și la mers la sală.",
+      "Și la mers la box, și la mers la Mc.",  
+      "Cam atât...",
+      "A, da...",
+      "Aproape am uitat...",
+      "Azi e ziua ta, nu-i așa?",
+      "Mai bine spus, majoratul tău.",
+      "Azi faci 18 ani!",
+      "Ce pot spune în afară de...",
+      "La mulți ani!",
+      "Nu îmi place să fiu prea serios.",
+      "Așa că ți-am pregătit un video.",
+      "Vizionare plăcută 😎",
+    ];
+
+    let msgIndex = 0;
+
+    box.style.color = "#102060";
+    box.style.fontSize = "4rem";
+
+    function typeMessage(line, charIndex = 0) {
+      if (charIndex < line.length) {
+      // use textContent to append each character (including spaces)
+      box.textContent += line[charIndex];
+      setTimeout(() => typeMessage(line, charIndex + 1), 100);
+      } else {
+      // after a pause, clear and move to next line
+      setTimeout(() => {
+        box.textContent = "";
+        msgIndex++;
+        if (msgIndex < messages.length) {
+        typeMessage(messages[msgIndex]);
+        }
+      }, 2178.5);
+      }
+    }
+
+    startBtn.addEventListener('click', () => {
+      // music fade-in
+      bgMusic.volume = 0;
+      bgMusic.currentTime = 0;
+      bgMusic.play().catch(() => {});
+      const fadeIn = setInterval(() => {
+        if (bgMusic.volume < 0.5) bgMusic.volume = Math.min(0.5, bgMusic.volume + 0.05);
+        else clearInterval(fadeIn);
+      }, 100);
+
+      // text & title animations
+      title.classList.add('play');
+      textPara.classList.add('play');
+
+      // start typewriter
+      typeMessage(messages[msgIndex]);
+
+      // hide button
+      startBtn.disabled = true;
+      startBtn.classList.add('hide');
+    });
+  </script>
+</body>
+</html>
