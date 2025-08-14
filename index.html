@@ -68,25 +68,82 @@
     box.style.color = "#102060";
     box.style.fontSize = "4rem";
 
-    function typeMessage(line, charIndex = 0) {
-      if (charIndex < line.length) {
-      // use textContent to append each character (including spaces)
-      box.textContent += line[charIndex];
-      setTimeout(() => typeMessage(line, charIndex + 1), 100);
-      } else {
-      // after a pause, clear and move to next line
-      setTimeout(() => {
-        box.textContent = "";
-        msgIndex++;
-        if (msgIndex < messages.length) {
-        typeMessage(messages[msgIndex]);
+    function showVideoButton() {
+      const videoBtn = document.createElement('button');
+      videoBtn.style.display = "flex";
+      videoBtn.style.justifyContent = "center";
+      videoBtn.style.alignItems = "center";
+      videoBtn.style.background = "linear-gradient(135deg, #8B0000 0%, #FF3B3B 100%)";
+      videoBtn.style.border = "none";
+      videoBtn.style.borderRadius = "2rem";
+      videoBtn.style.boxShadow = "0 4px 16px rgba(0,0,0,0.15), 0 0 0 4px #e0e0e0";
+      videoBtn.style.padding = "1rem 2rem";
+      videoBtn.style.margin = "2rem auto";
+      videoBtn.style.position = "absolute";
+      videoBtn.style.left = "50%";
+      videoBtn.style.top = "50%";
+      videoBtn.style.transform = "translate(-50%, -50%)";
+      videoBtn.id = "videoBtn";
+      videoBtn.style.transition = "transform 0.2s cubic-bezier(.4,2,.3,1), box-shadow 0.2s";
+
+      const img = document.createElement('img');
+      img.src = "image.png";
+      img.alt = "Vezi Video";
+      img.style.height = "3rem";
+      img.style.width = "auto";
+      img.style.borderRadius = "1rem";
+      videoBtn.appendChild(img);
+
+      videoBtn.addEventListener('mouseenter', () => {
+        videoBtn.style.transform = "translate(-50%, -55%) scale(1.05)";
+        videoBtn.style.boxShadow = "0 8px 24px rgba(0,0,0,0.18), 0 0 0 6px white";
+      });
+      videoBtn.addEventListener('mouseleave', () => {
+        videoBtn.style.transform = "translate(-50%, -50%)";
+        videoBtn.style.boxShadow = "0 4px 16px rgba(0,0,0,0.15), 0 0 0 4px white";
+      });
+
+      document.body.appendChild(videoBtn);
+
+      videoBtn.addEventListener('click', () => {
+        videoBtn.disabled = true;
+        videoBtn.style.display = "none";
+        const video = document.createElement('video');
+        video.src = "video.mp4";
+        video.controls = true;
+        video.autoplay = true;
+        video.style.display = "block";
+        video.style.position = "fixed";
+        video.style.left = "50%";
+        video.style.top = "50%";
+        video.style.transform = "translate(-50%, -50%)";
+        video.style.margin = "0";
+        video.style.maxWidth = "90vw";
+        video.style.maxHeight = "70vh";
+        video.style.zIndex = "9999";
+        document.body.appendChild(video);
+      });
         }
-      }, 2178.5);
+
+        function typeMessage(line, charIndex = 0) {
+      if (charIndex < line.length) {
+        box.textContent += line[charIndex];
+        setTimeout(() => typeMessage(line, charIndex + 1), 100);
+      } else {
+        setTimeout(() => {
+          box.textContent = "";
+          msgIndex++;
+          if (msgIndex < messages.length) {
+        typeMessage(messages[msgIndex]);
+          } else {
+        // All messages done, show video button after 2 seconds
+        setTimeout(showVideoButton, 500);
+          }
+        }, 2180.5);
       }
-    }
+        }
 
     startBtn.addEventListener('click', () => {
-      // music fade-in
       bgMusic.volume = 0;
       bgMusic.currentTime = 0;
       bgMusic.play().catch(() => {});
@@ -95,17 +152,15 @@
         else clearInterval(fadeIn);
       }, 100);
 
-      // text & title animations
       title.classList.add('play');
       textPara.classList.add('play');
 
-      // start typewriter
       typeMessage(messages[msgIndex]);
 
-      // hide button
       startBtn.disabled = true;
       startBtn.classList.add('hide');
     });
+  </script>
   </script>
 </body>
 </html>
