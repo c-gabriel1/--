@@ -108,24 +108,26 @@
       videoBtn.addEventListener('click', () => {
         videoBtn.disabled = true;
         videoBtn.style.display = "none";
-        const video = document.createElement('video');
-        video.src = "video.mp4";
-        video.controls = true;
-        video.autoplay = true;
-        video.style.display = "block";
-        video.style.position = "fixed";
-        video.style.left = "50%";
-        video.style.top = "50%";
-        video.style.transform = "translate(-50%, -50%)";
-        video.style.margin = "0";
-        video.style.maxWidth = "90vw";
-        video.style.maxHeight = "70vh";
-        video.style.zIndex = "9999";
-        document.body.appendChild(video);
+        const iframe = document.createElement('iframe');
+        iframe.src = "https://www.youtube.com/embed/8YLf28-wo-g?autoplay=1";
+        iframe.allow = "autoplay; encrypted-media";
+        iframe.allowFullscreen = true;
+        iframe.style.display = "block";
+        iframe.style.position = "fixed";
+        iframe.style.left = "50%";
+        iframe.style.top = "50%";
+        iframe.style.transform = "translate(-50%, -50%)";
+        iframe.style.margin = "0";
+        iframe.style.maxWidth = "90vw";
+        iframe.style.maxHeight = "70vh";
+        iframe.style.width = "90vw";
+        iframe.style.height = "70vh";
+        iframe.style.zIndex = "9999";
+        document.body.appendChild(iframe);
       });
-        }
+    }
 
-        function typeMessage(line, charIndex = 0) {
+    function typeMessage(line, charIndex = 0) {
       if (charIndex < line.length) {
         box.textContent += line[charIndex];
         setTimeout(() => typeMessage(line, charIndex + 1), 100);
@@ -134,14 +136,14 @@
           box.textContent = "";
           msgIndex++;
           if (msgIndex < messages.length) {
-        typeMessage(messages[msgIndex]);
+            typeMessage(messages[msgIndex]);
           } else {
-        // All messages done, show video button after 2 seconds
-        setTimeout(showVideoButton, 500);
+            // All messages done, show video button after 2 seconds
+            setTimeout(showVideoButton, 500);
           }
         }, 2180.5);
       }
-        }
+    }
 
     startBtn.addEventListener('click', () => {
       bgMusic.volume = 0;
