@@ -13,7 +13,6 @@
   <button id="startBtn">?</button>
   <audio id="bgMusic" src="music.mp3" preload="auto"></audio>
   
-  <!-- messageBox now lives here -->
   <div id="messageBox"></div>
   
   <div class="container">
@@ -138,10 +137,9 @@
           if (msgIndex < messages.length) {
             typeMessage(messages[msgIndex]);
           } else {
-            // All messages done, show video button after 2 seconds
             setTimeout(showVideoButton, 500);
           }
-        }, 2250.5);
+        }, 2290);
       }
     }
 
@@ -166,5 +164,3 @@
   </script>
 </body>
 </html>
-
-
